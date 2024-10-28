@@ -103,6 +103,8 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 0
   healthBarPrefab: {fileID: 3751649483741925618, guid: f0310ce49100e0745b2bd9753de03027, type: 3}
+  height: 0
+  animator: {fileID: 898159508174331980}
 --- !u!95 &898159508174331980
 Animator:
   serializedVersion: 4
@@ -138,6 +140,8 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 0
   healthBarPrefab: {fileID: 0}
+  height: 0
+  animator: {fileID: 898159508174331980}
   Player: {fileID: 0}
   enemyspeed: 1
   visual: 0
