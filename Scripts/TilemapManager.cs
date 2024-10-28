@@ -19,7 +19,7 @@ public class TilemapManager : MonoBehaviour
     }
     IEnumerator HideTilesAfterDelay()
     {
-        // Belirtilen süreyi bekle
+       
         yield return new WaitForSeconds(delay);
 
 
@@ -56,9 +56,9 @@ public class TilemapManager : MonoBehaviour
         {
             foreach (Vector3Int pos in changeTilePositions)
             {
-                // Belirtilen pozisyondaki fayansý yeni fayans ile deðiþtir
+                
                 tilemap.SetTile(pos, newTile);
-                Debug.Log($"Tile at position {pos} changed to {newTile}");
+               
             }
         }
 

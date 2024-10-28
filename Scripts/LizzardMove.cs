@@ -1,6 +1,7 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LizzardMove : Damageable
 {
@@ -18,8 +19,16 @@ public class LizzardMove : Damageable
 
     void Update()
     {
+        
+        if (Player == null)
+        {
+           
+            return; 
+        }
+
         Vector3 targetPosition = new Vector3(Player.position.x, transform.position.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, enemyspeed * Time.deltaTime);
+
         if (Player.position.x > transform.position.x)
         {
             spriteRenderer.flipX = true;
@@ -35,7 +44,7 @@ public class LizzardMove : Damageable
         while (true)
         {
             yield return new WaitForSeconds(Lizzardvisual);
-            spriteRenderer.enabled = !spriteRenderer.enabled; // Görünürlüðü deðiþtir
+            spriteRenderer.enabled = !spriteRenderer.enabled; 
         }
     }
 
@@ -45,6 +54,7 @@ public class LizzardMove : Damageable
         {
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
+            SceneManager.LoadScene(1);
         }
     }
 }

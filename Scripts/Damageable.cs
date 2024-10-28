@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Damageable : MonoBehaviour
 {
@@ -7,10 +8,13 @@ public class Damageable : MonoBehaviour
     public GameObject healthBarPrefab;
     protected GameObject healthBarInstance;
     protected HealthBar healthBar;
+    public float height;
+    public Animator animator;
 
     protected virtual void Start()
     {
         currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
 
         if (healthBarPrefab != null)
         {
@@ -23,7 +27,7 @@ public class Damageable : MonoBehaviour
                 if (healthBar != null)
                 {
                     healthBar.target = transform;
-                    healthBar.offset = new Vector3(0, 1.5f, 0);
+                    healthBar.offset = new Vector3(0, height, 0);
                     healthBar.SetMaxHealth(maxHealth);
                     healthBar.SetHealth(currentHealth);
                 }
@@ -34,6 +38,7 @@ public class Damageable : MonoBehaviour
     public virtual void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        animator.SetBool("TakeDamage", true);
         if (healthBar != null)
         {
             healthBar.SetHealth(currentHealth);
@@ -42,6 +47,7 @@ public class Damageable : MonoBehaviour
         {
             Die();
         }
+        StartCoroutine(ResetDamageAnimation());
     }
 
     protected virtual void Die()
@@ -51,6 +57,11 @@ public class Damageable : MonoBehaviour
             Destroy(healthBarInstance);
         }
         Destroy(gameObject);
+    }
+    private IEnumerator ResetDamageAnimation()
+    {
+        yield return new WaitForSeconds(0.05f); 
+        animator.SetBool("TakeDamage", false); 
     }
 }
 

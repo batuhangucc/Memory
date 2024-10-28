@@ -1,6 +1,6 @@
-
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyFollow : Damageable
 {
@@ -8,6 +8,8 @@ public class EnemyFollow : Damageable
     public float enemyspeed = 2f;
     private SpriteRenderer spriteRenderer;
     public float visual;
+
+    private bool stopFollowing = false; 
 
     protected override void Start()
     {
@@ -18,9 +20,22 @@ public class EnemyFollow : Damageable
 
     void Update()
     {
-        Vector3 targetposion = Player.position;
-        Vector3 direction = (targetposion - transform.position).normalized;
-        transform.position += direction * enemyspeed * Time.deltaTime;
+        if (Player != null && !stopFollowing) 
+        {
+            Vector3 targetPosition = Player.position;
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            transform.position += direction * enemyspeed * Time.deltaTime;
+        }
+        else
+        {
+            StopFollowing(); 
+        }
+    }
+
+    private void StopFollowing()
+    {
+        stopFollowing = true; 
+        enemyspeed = 0; 
     }
 
     private IEnumerator ToggleVisibility()
@@ -29,7 +44,6 @@ public class EnemyFollow : Damageable
         {
             yield return new WaitForSeconds(visual);
             spriteRenderer.enabled = !spriteRenderer.enabled;
-            // Saðlýk barý görünürlüðünü deðiþtir
         }
     }
 
@@ -39,6 +53,8 @@ public class EnemyFollow : Damageable
         {
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
+            SceneManager.LoadScene(1);
         }
     }
 }
+
